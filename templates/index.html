@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodStream - Smart Content Recommender</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZTUwOTE0IiBkPSJNMzIwIDM2Ny44TDI3NC43IDI3NC44YzEuMi0uMS0uMS0uMS0uMS0uMWwtMzEuOS0xMDEuOS0zMS45IDEwMS45cy0xLjMgMC0uMS4xTDE2NiAzNjcuOGMtMTguNi0yNC42LTMwLTU1LjMtMzAtODguNyAwLTgxLjUgNjYuMS0xNDcuNiAxNDcuNi0xNDcuNiA4MS41IDAgMTQ3LjYgNjYuMSAxNDcuNiAxNDcuNiAwIDMzLjQtMTEuNCA2NC4xLTMwIDg4Ljd6TTI4My41IDM2Mi4xbC0uMS0uMSAyNy41IDU2LjJjLTEyLjcgNS4zLTI2LjYgOC4zLTQxLjIgOC4zLTE0LjYgMC0yOC41LTMtNDEuMi04LjNsMjcuNS01Ni4yLS4xLjF6Ii8+PC9zdmc+">
+    
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header id="header">
+        <a href="#" class="logo">
+            <i class="fas fa-film"></i>
+            MoodStream
+        </a>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#recommendations">Recommendations</a></li>
+            <li><a href="#history">Watch History</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="mobile-menu-close" id="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="mobile-menu-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#recommendations">Recommendations</a></li>
+            <li><a href="#history">Watch History</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>MoodStream: Your Smart Content Recommender</h1>
+            <p>Discover movies and shows based on your mood, time of day, and personal preferences. No more endless scrolling!</p>
+            <a href="#recommendations" class="cta-button">
+                <i class="fas fa-magic"></i> Get Recommendations
+            </a>
+        </div>
+    </section>
+    
+    <main id="recommendations">
+        <div class="container">
+            <aside class="sidebar">
+                <h3><i class="fas fa-sliders-h"></i> Personalize</h3>
+                
+                <div class="filter-group">
+                    <label>Your Mood</label>
+                    <div class="mood-selector">
+                        <button class="mood-option" data-mood="Happy">
+                            <i class="fas fa-grin-beam"></i> Happy
+                        </button>
+                        <button class="mood-option" data-mood="Sad">
+                            <i class="fas fa-sad-tear"></i> Sad
+                        </button>
+                        <button class="mood-option" data-mood="Excited">
+                            <i class="fas fa-grin-stars"></i> Excited
+                        </button>
+                        <button class="mood-option" data-mood="Chill">
+                            <i class="fas fa-smile-beam"></i> Chill
+                        </button>
+                        <button class="mood-option" data-mood="Focused">
+                            <i class="fas fa-brain"></i> Focused
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Time of Day</label>
+                    <div class="time-selector">
+                        <select id="time-select">
+                            <option value="current">Current Time</option>
+                            <option value="morning">Morning (5AM-12PM)</option>
+                            <option value="afternoon">Afternoon (12PM-5PM)</option>
+                            <option value="evening">Evening (5PM-10PM)</option>
+                            <option value="night">Late Night (10PM-5AM)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="day-selector">
+                        <select id="day-select">
+                            <option value="current">Current Day</option>
+                            <option value="weekday">Weekday</option>
+                            <option value="weekend">Weekend</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Genres</label>
+                    <div class="genre-checklist" id="genre-list">
+                        <!-- Genres will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Release Year</label>
+                    <div class="year-range">
+                        <input type="range" id="year-slider" min="1950" max="2025" value="1950" step="5">
+                        <div class="year-labels">
+                            <span>1950</span>
+                            <span id="year-value">1950</span>
+                            <span>2025</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Content Type</label>
+                    <select id="content-type">
+                        <option value="all">All Content</option>
+                        <option value="movie">Movies Only</option>
+                        <option value="tv">TV Shows Only</option>
+                    </select>
+                </div>
+                
+                <button class="reset-button" id="reset-filters">
+                    <i class="fas fa-redo-alt"></i> Reset All Filters
+                </button>
+            </aside>
+            
+            <div class="content">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="smart">
+                            <i class="fas fa-chart-line"></i> Smart Recommendations
+                        </div>
+                        <div class="tab" data-tab="mood">
+                            <i class="fas fa-theater-masks"></i> Mood-Based
+                        </div>
+                        <div class="tab" data-tab="time">
+                            <i class="fas fa-clock"></i> Time-Based
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content active" id="smart-tab">
+                        <h2><i class="fas fa-brain"></i> Smart Recommendations</h2>
+                        <p>Content tailored to your personal preferences and watch history.</p>
+                        
+                        <div class="movies-grid" id="smart-grid">
+                            <!-- Loading indicator -->
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                <p>Finding your perfect matches...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="mood-tab">
+                        <h2><i class="fas fa-heart"></i> Mood-Based Recommendations</h2>
+                        <p>Content selected based on how you're feeling right now.</p>
+                        
+                        <div class="movies-grid" id="mood-grid">
+                            <!-- Movies will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="time-tab">
+                        <h2><i class="fas fa-hourglass-half"></i> Time-Based Recommendations</h2>
+                        <p>Content that fits the current time of day and day of week.</p>
+                        
+                        <div class="movies-grid" id="time-grid">
+                            <!-- Movies will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="surprise-section">
+                    <h2><i class="fas fa-magic"></i> Feeling Adventurous?</h2>
+                    <button class="surprise-button" id="surprise-btn">
+                        <i class="fas fa-random"></i>
+                        Surprise Me!
+                    </button>
+                </div>
+                
+                <div class="history-section" id="history">
+                    <h2><i class="fas fa-history"></i> Your Watch History</h2>
+                    <ul class="history-list" id="history-list">
+                        <!-- Watch history will be populated by JavaScript -->
+                    </ul>
+                    <button class="clear-history" id="clear-history">
+                        <i class="fas fa-trash-alt"></i> Clear Watch History
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Movie Detail Modal -->
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-left">
+                <img src="/api/placeholder/500/750" alt="Movie Poster" class="modal-poster" id="modal-poster">
+            </div>
+            <div class="modal-right">
+                <h2 class="modal-title" id="modal-title">Movie Title</h2>
+                <div class="modal-meta">
+                    <div><i class="fas fa-calendar-alt"></i> <span id="modal-year">2023</span></div>
+                    <div><i class="fas fa-clock"></i> <span id="modal-duration">120 min</span></div>
+                    <div><i class="fas fa-star"></i> <span id="modal-rating">PG-13</span></div>
+                </div>
+                <div id="modal-genres" class="modal-genres">
+                    <span>Action</span>
+                    <span>Adventure</span>
+                    <span>Sci-Fi</span>
+                </div>
+                <p class="modal-description" id="modal-description">
+                    Movie description will go here.
+                </p>
+                <div class="modal-actions">
+                    <button class="modal-button primary" id="watch-button">
+                        <i class="fas fa-check"></i> Mark as Watched
+                    </button>
+                    <button class="modal-button secondary" id="similar-button">
+                        <i class="fas fa-film"></i> Find Similar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/ayanmal1k" target="_blank" class="social-link">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/ayanmal1k" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#recommendations">Recommendations</a>
+                <a href="#history">Watch History</a>
+            
+            </div>
+            <p class="footer-text">&copy; 2025 MoodStream - Your Smart Content Recommender</p>
+            <p class="creator">Created with <i class="fas fa-heart" style="color: var(--primary);"></i> by <span>Ayan Malik</span></p>
+        </div>
+    </footer>
+
+    
+<script src="/static/js/main.js"></script>
+
+    
+</body>
+</html>
